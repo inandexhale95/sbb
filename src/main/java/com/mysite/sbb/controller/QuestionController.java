@@ -1,5 +1,6 @@
 package com.mysite.sbb.controller;
 
+import com.mysite.sbb.entity.Pagination;
 import com.mysite.sbb.entity.Question;
 import com.mysite.sbb.exception.DataNotFoundException;
 import com.mysite.sbb.form.AnswerForm;
@@ -31,8 +32,11 @@ public class QuestionController {
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "0") int page) {
-        List<Question> questionList = questionService.getList(page);
-        model.addAttribute("questionList", questionList);
+        Pagination pagination = questionService.getPagination(page);
+
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("questionList", questionMapper.getPageList(pagination));
+
         return "question_list";
     }
 

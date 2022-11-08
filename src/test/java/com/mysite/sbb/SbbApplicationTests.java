@@ -1,6 +1,7 @@
 package com.mysite.sbb;
 
 import com.mysite.sbb.entity.Answer;
+import com.mysite.sbb.entity.Pagination;
 import com.mysite.sbb.entity.Question;
 import com.mysite.sbb.mapper.AnswerMapper;
 import com.mysite.sbb.mapper.QuestionMapper;
@@ -131,16 +132,8 @@ class SbbApplicationTests {
 
 	@Test
 	void dummyTest() {
-		final int pageItems = 10;
-		final int page = 3;
-		int maxId = questionMapper.getMaxQuestionId();
-
-		int pageId = maxId - (page * pageItems);
-
-		List<Question> questionList = questionMapper.getPageList(pageId);
-
-		for (Question q : questionList) {
-			System.out.println(q);
-		}
+		Pagination pagination = new Pagination();
+		pagination.setMaxId(questionMapper.getMaxQuestionId());
+		System.out.println(pagination.getMaxId());
 	}
 }

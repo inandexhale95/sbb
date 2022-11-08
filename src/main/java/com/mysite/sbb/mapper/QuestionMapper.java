@@ -1,5 +1,6 @@
 package com.mysite.sbb.mapper;
 
+import com.mysite.sbb.entity.Pagination;
 import com.mysite.sbb.entity.Question;
 import org.apache.ibatis.annotations.*;
 
@@ -52,6 +53,6 @@ public interface QuestionMapper {
     @Select("SELECT MAX(id) FROM question")
     int getMaxQuestionId();
 
-    @Select("SELECT * FROM question WHERE id <= #{pageId} AND id > (#{pageId}-10) ORDER BY id DESC")
-    List<Question> getPageList(@Param("pageId")int pageId);
+    @Select("SELECT * FROM question WHERE id <= #{pagination.pageId} AND id > (#{pagination.pageId} - #{pagination.pageItem}) ORDER BY id DESC")
+    List<Question> getPageList(@Param("pagination") Pagination pagination);
 }

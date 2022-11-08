@@ -1,5 +1,6 @@
 package com.mysite.sbb.service;
 
+import com.mysite.sbb.entity.Pagination;
 import com.mysite.sbb.entity.Question;
 import com.mysite.sbb.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +20,10 @@ public class QuestionService {
         this.questionMapper = questionMapper;
     }
 
-    public List<Question> getList(int page) {
-        final int pageItems = 10;
-        int maxId = questionMapper.getMaxQuestionId();  // Question PK 마지막 값
-        int pageId = maxId - (page * pageItems);        // 페이징 시작할 id PK
+    public Pagination getPagination(int page) {
+        Pagination pagination = new Pagination();
+        pagination.pageSet(page, questionMapper.getMaxQuestionId());
 
-        int totalPageCount = Math.floorDiv(maxId, pageItems);   // 총 페이지 수
-
-        if (totalPageCount > page) {
-            // 총 페이지 수를 초과하면 예외
-        }
-
-        return questionMapper.getPageList(pageId);
+        return pagination;
     }
 }
